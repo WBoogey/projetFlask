@@ -2,3 +2,5 @@ Flask==2.2.0
 Flask-PyMongo==2.3.0
 Flask-WTF==1.0.1
 pymongo==4.5.0
+WTForms==2.3.3
+flask-cors
