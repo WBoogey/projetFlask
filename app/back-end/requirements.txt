@@ -1,0 +1,6 @@
+Flask
+Flask-PyMongo
+PyJWT
+bcrypt
+pytest
+Flask-CORS
