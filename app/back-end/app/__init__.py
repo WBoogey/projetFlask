@@ -3,17 +3,15 @@ from flask_pymongo import PyMongo
 from flask_cors import CORS
 from app.config import Config
 
-# MongoDB client
+
 mongo = PyMongo()
 
 def create_app():
     app = Flask(__name__)
     CORS(app)  # Enable CORS for cross-origin requests
 
-    # Load configuration
     app.config.from_object(Config)
 
-    # Initialize extensions
     mongo.init_app(app)
 
     # Test MongoDB connection during app creation
@@ -26,6 +24,10 @@ def create_app():
 
     # Register blueprints
     from app.routes.user_routes import user_bp
+    from app.routes.scrutin_routes import scrutin_bp
+    from app.routes.vote_routes import vote_bp
+    app.register_blueprint(scrutin_bp, url_prefix="/scrutins")
     app.register_blueprint(user_bp, url_prefix="/users")
+    app.register_blueprint(vote_bp, url_prefix="/votes")
 
     return app
