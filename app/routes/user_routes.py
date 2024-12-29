@@ -5,7 +5,7 @@ user_bp = Blueprint('user_bp', __name__)
 
 @user_bp.route('/')
 def home():
-    return render_template('home.html')  # Ensure home.html is in the templates directory
+    return render_template('home.html')
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
