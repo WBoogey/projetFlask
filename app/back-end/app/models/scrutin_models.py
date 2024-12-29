@@ -1,8 +1,6 @@
-# scrutin_model.py
 from app import mongo
 from bson.objectid import ObjectId
 from datetime import datetime
-
 
 class Scrutin:
     @staticmethod
@@ -60,7 +58,6 @@ class Scrutin:
                 if option not in results:
                     results[option] = 0
                 results[option] += weight
-        # Sort options by weight
         sorted_results = sorted(results.items(), key=lambda x: x[1], reverse=True)
         return sorted_results
 
@@ -78,3 +75,14 @@ class Scrutin:
                 stats["vote_distribution"][option] += weight
         return stats
 
+    @staticmethod
+    def get_platform_statistics():
+        scrutins = list(mongo.db.scrutins.find())
+        total_scrutins = len(scrutins)
+        total_votes = mongo.db.votes.count_documents({})
+        avg_options = sum(len(scrutin["options"]) for scrutin in scrutins) / total_scrutins if total_scrutins else 0
+        return {
+            "total_scrutins": total_scrutins,
+            "total_votes": total_votes,
+            "avg_options_per_scrutin": avg_options
+        }
