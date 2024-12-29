@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Candidats</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            color: #333333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2a5298;
+        }
+
+        .candidate {
+            display: flex;
+            flex-direction: column;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .candidate:hover {
+            background: #e3f2fd;
+        }
+
+        .candidate-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            color: #2a5298;
+        }
+
+        .candidate-program {
+            margin: 5px 0 10px;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #1e88e5;
+            text-align: center;
+            color: #ffffff;
+            font-size: 0.9em;
+            line-height: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .vote-button {
+            align-self: flex-end;
+            background: #1e88e5;
+            border: none;
+            padding: 10px 20px;
+            color: #ffffff;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vote-button:hover {
+            background: #1565c0;
+            transform: scale(1.1);
+        }
+
+        #results {
+            text-align: center;
+            margin-top: 20px;
+            color: #2a5298;
+            font-size: 1.2em;
+            display: none; /* Initialement caché */
+        }
+
+        #timer {
+            font-size: 1.5em;
+            text-align: center;
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Liste des Candidats</h1>
+
+        <div id="timer">10:00</div> <!-- Affichage du minuteur -->
+
+        <div class="candidate" id="candidate-1">
+            <p class="candidate-name">Candidat 1</p>
+            <p class="candidate-program">Programme : Réduire les impôts, développer l'éducation et promouvoir l'innovation.</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-1" style="width: 40%;">40%</div>
+            </div>
+            <button class="vote-button" onclick="voteForCandidate(1)">Voter</button>
+        </div>
+
+        <div class="candidate" id="candidate-2">
+            <p class="candidate-name">Candidat 2</p>
+            <p class="candidate-program">Programme : Investir dans les énergies renouvelables et améliorer les infrastructures.</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-2" style="width: 35%;">35%</div>
+            </div>
+            <button class="vote-button" onclick="voteForCandidate(2)">Voter</button>
+        </div>
+
+        <div class="candidate" id="candidate-3">
+            <p class="candidate-name">Candidat 3</p>
+            <p class="candidate-program">Programme : Soutenir les petites entreprises et renforcer la sécurité.</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-3" style="width: 25%;">25%</div>
+            </div>
+            <button class="vote-button" onclick="voteForCandidate(3)">Voter</button>
+        </div>
+
+        <div id="results">
+            <h2>Résultats après 10 minutes</h2>
+            <p>Candidat 1 : <span id="result-1">0</span>%</p>
+            <p>Candidat 2 : <span id="result-2">0</span>%</p>
+            <p>Candidat 3 : <span id="result-3">0</span>%</p>
+        </div>
+    </div>
+
+    <script>
+        const candidates = [
+            { id: 1, name: "Candidat 1", votes: 40 },
+            { id: 2, name: "Candidat 2", votes: 35 },
+            { id: 3, name: "Candidat 3", votes: 25 }
+        ];
+
+        let timeRemaining = 600; // Temps restant en secondes (10 minutes)
+
+        // Fonction pour afficher le minuteur
+        function updateTimer() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeRemaining > 0) {
+                timeRemaining--;
+            } else {
+                displayResults();
+            }
+        }
+
+        // Afficher les résultats après 10 minutes
+        function displayResults() {
+            const totalVotes = candidates.reduce((sum, c) => sum + c.votes, 0);
+            candidates.forEach(c => {
+                const percentage = ((c.votes / totalVotes) * 100).toFixed(1);
+                document.getElementById(`result-${c.id}`).textContent = percentage;
+            });
+            document.getElementById("results").style.display = "block";
+        }
+
+        // Fonction pour gérer les votes
+        function voteForCandidate(candidateId) {
+            const candidate = candidates.find(c => c.id === candidateId);
+            if (candidate) {
+                candidate.votes += 1;
+                const totalVotes = candidates.reduce((sum, c) => sum + c.votes, 0);
+
+                candidates.forEach(c => {
+                    const percentage = ((c.votes / totalVotes) * 100).toFixed(1);
+                    const progressBar = document.getElementById(`progress-${c.id}`);
+                    progressBar.style.width = `${percentage}%`;
+                    progressBar.textContent = `${percentage}%`;
+                });
+
+                alert(`Merci d'avoir voté pour ${candidate.name}!`);
+            }
+        }
+
+        // Mettre à jour le minuteur chaque seconde
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
