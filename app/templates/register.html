@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
 <body>
   <h1>Register</h1>
@@ -18,16 +19,12 @@
     <label for="date_naissance">Date de Naissance:</label>
     <input type="date" id="date_naissance" name="date_naissance" required>
     <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
     <button type="submit">Register</button>
   </form>
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul>
-      {% for category, message in messages %}
-        <li class="{{ category }}">{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+  <br>
+  <a href="{{ url_for('user_bp.login') }}" id="login-button">Login</a>
 </body>
 </html>

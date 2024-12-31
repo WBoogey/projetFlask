@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+button {
+  background-color: #000000; /* Noir */
+  color: #ffffff; /* Blanc */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: #333333; /* Gris foncé */
+}
+
+a {
+  margin: 10px;
+}
+
+.scrutins-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  gap: 40px;
+}
+
+.scrutin-card {
+  background-color: #f0f0f0; /* Gris clair */
+  color: #000000; /* Noir */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.scrutin-card h3 {
+  margin-top: 0;
+}
+
+.scrutin-card p {
+  margin: 10px 0;
+}

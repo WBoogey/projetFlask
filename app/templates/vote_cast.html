@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Cast</title>
+</head>
+<body>
+    <h1>Vote Cast Successfully</h1>
+    <p>User ID: {{ vote.user_id }}</p>
+    <p>Scrutin ID: {{ vote.scrutin_id }}</p>
+    <p>Preferences:</p>
+    <ul>
+        {% for candidate, rank in vote.preferences.items() %}
+        <li>{{ candidate }}: {{ rank }}</li>
+        {% endfor %}
+    </ul>
+    <p>Cast At: {{ vote.cast_at }}</p>
+</body>
+</html>

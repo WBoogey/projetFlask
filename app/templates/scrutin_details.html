@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrutin Details</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <h1>{{ scrutin.title }}</h1>
+  <p>{{ scrutin.description }}</p>
+  <p>Start Date: {{ scrutin.start_date }}</p>
+  <p>End Date: {{ scrutin.end_date }}</p>
+  <h2>Options</h2>
+  <ul>
+    {% for option in scrutin.options %}
+    <li>{{ option }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{{ url_for('votes.vote', scrutin_id=scrutin._id) }}">Vote</a>
+</body>
+</html>

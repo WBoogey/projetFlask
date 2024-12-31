@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+  <h1>Profile</h1>
+  <p>Username: {{ user.pseudonyme }}</p>
+  <p>Email: {{ user.email }}</p>
+  <h2>Your Votes</h2>
+  <ul>
+    {% for vote in votes %}
+    <li>
+      <p>Scrutin ID: {{ vote.scrutin_id }}</p>
+      <p>Preferences: {{ vote.preferences }}</p>
+      <a href="{{ url_for('user_bp.modify_vote', vote_id=vote._id) }}">Modify Vote</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <a href="{{ url_for('user_bp.logout') }}">Logout</a>
+</body>
+</html>
