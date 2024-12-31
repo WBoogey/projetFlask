@@ -19,6 +19,7 @@ Pour installer le projet, suivez les étapes ci-dessous :
   ```
 4. Activez l'environement virtuel venv:
   ```bash
+  python3 -m venv venv
   source venv/bin/activate
   ```
 5. lancez les test unitaire:
