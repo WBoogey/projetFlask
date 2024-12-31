@@ -87,3 +87,18 @@ class Vote:
             vote["_id"] = str(vote["_id"])  # Convertir ObjectId en chaîne
             vote["scrutin_id"] = str(vote["scrutin_id"])
         return votes
+    
+    
+    @staticmethod
+    def get_votes_by_scrutin(scrutin_id):
+        """
+        Obtenir tous les votes pour un scrutin spécifique.
+        """
+        if not scrutin_id:
+            raise ValueError("L'ID du scrutin est requis.")
+        
+        votes = list(mongo.db.votes.find({"scrutin_id": ObjectId(scrutin_id)}))
+        for vote in votes:
+            vote["_id"] = str(vote["_id"])  # Convertir ObjectId en chaîne
+            vote["user_id"] = str(vote["user_id"])  # Convertir ObjectId en chaîne
+        return votes

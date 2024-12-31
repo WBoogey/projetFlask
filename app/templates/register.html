@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
 <body>
-  <h1>Register</h1>
+  <h1>S'enregister</h1>
   <form method="POST" action="{{ url_for('user_bp.register') }}">
     <label for="pseudonyme">Pseudonyme:</label>
     <input type="text" id="pseudonyme" name="pseudonyme" required>
@@ -19,10 +19,10 @@
     <label for="date_naissance">Date de Naissance:</label>
     <input type="date" id="date_naissance" name="date_naissance" required>
     <br>
-    <label for="password">Password:</label>
+    <label for="password">Mot de passe</label>
     <input type="password" id="password" name="password" required>
     <br>
-    <button type="submit">Register</button>
+    <button type="submit">Enregistrement</button>
   </form>
   <br>
   <a href="{{ url_for('user_bp.login') }}" id="login-button">Login</a>

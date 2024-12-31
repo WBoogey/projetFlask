@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <h1>Vote for {{ scrutin.title }}</h1>
+  <h1>Vote pour {{ scrutin.title }}</h1>
   <form method="POST" action="{{ url_for('votes.cast_vote', scrutin_id=scrutin._id) }}">
     {% for option in scrutin.options %}
     <label for="preference_{{ option }}">{{ option }}</label>

@@ -26,7 +26,10 @@ def register():
             user = User.create_user(
                 data["pseudonyme"], data["email"], data["date_naissance"], data["password"], role
             )
-            return redirect(url_for('user_bp.login'))
+            session['user_id'] = str(user["_id"])
+            session['logged_in'] = True
+            session['role'] = user["role"]
+            return redirect(url_for('home'))
         except ValueError as e:
             return render_template("error.html", error=str(e)), 400
         except Exception as e:
@@ -65,18 +68,31 @@ def logout():
     session.clear()
     return redirect(url_for("home"))
 
-@user_bp.route("/profile")
+@user_bp.route('/profile', methods=['GET', 'POST'])
 def profile():
-    if not session.get("logged_in"):
-        return redirect(url_for("user_bp.login"))
-    user_id = session.get("user_id")
-    if not user_id:
-        return redirect(url_for("user_bp.login"))
+    """
+    Display and edit user profile.
+    """
+    if not session.get('logged_in'):
+        return redirect(url_for('user_bp.login'))
+
+    user_id = session.get('user_id')
     user = User.get_user_by_id(user_id)
-    if not user:
-        return render_template("error.html", error="Utilisateur non trouvé"), 404
+
+    if request.method == 'POST':
+        data = request.form
+        updates = {
+            "pseudonyme": data.get("pseudonyme"),
+            "email": data.get("email"),
+            "date_naissance": ensure_datetime(data.get("date_naissance"))
+        }
+        if data.get("password"):
+            updates["password"] = generate_password_hash(data.get("password"))
+        User.update_user(user_id, updates)
+        return redirect(url_for('user_bp.profile'))
+
     votes = User.get_user_votes(user_id)
-    return render_template("profile.html", user=user, votes=votes)
+    return render_template('profile.html', user=user, votes=votes)
 
 @user_bp.route("/modify_vote/<vote_id>", methods=["GET", "POST"])
 def modify_vote(vote_id):
@@ -115,7 +131,7 @@ def create_scrutin():
         end_date = request.form["end_date"]
         created_by = session["user_id"]
         Scrutin.create_scrutin(title, description, options, start_date, end_date, created_by)
-        return redirect(url_for("admin_bp.dashboard"))
+        return redirect(url_for("user_bp.dashboard"))
     return render_template("create_scrutin.html")
 
 @user_bp.route("/modify_scrutin/<scrutin_id>", methods=["GET", "POST"])
@@ -123,21 +139,21 @@ def modify_scrutin(scrutin_id):
     if request.method == "POST":
         updates = request.form.to_dict()
         Scrutin.update_scrutin(scrutin_id, updates)
-        return redirect(url_for("admin_bp.dashboard"))
+        return redirect(url_for("user_bp.dashboard"))
     scrutin = Scrutin.get_scrutin_by_id(scrutin_id)
     return render_template("modify_scrutin.html", scrutin=scrutin)
 
 @user_bp.route("/delete_scrutin/<scrutin_id>", methods=["POST"])
 def delete_scrutin(scrutin_id):
     Scrutin.delete_scrutin(scrutin_id)
-    return redirect(url_for("admin_bp.dashboard"))
+    return redirect(url_for("user_bp.dashboard"))
 
 @user_bp.route("/stop_scrutin/<scrutin_id>", methods=["POST"])
 def stop_scrutin(scrutin_id):
     Scrutin.update_scrutin(scrutin_id, {"is_active": False})
-    return redirect(url_for("admin_bp.dashboard"))
+    return redirect(url_for("user_bp.dashboard"))
 
 @user_bp.route("/delete_user/<user_id>", methods=["POST"])
 def delete_user(user_id):
     User.delete_user(user_id)
-    return redirect(url_for("admin_bp.dashboard"))
+    return redirect(url_for("user_bp.dashboard"))

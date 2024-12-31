@@ -6,32 +6,32 @@
   <title>Home</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-  <style>
-    .hidden {
-      display: none;
-    }
-  </style>
 </head>
 <body>
-  <h1>Welcome to the Home Page</h1>
-  <p>home.</p>
-  {% if not session.logged_in %}
-  <a href="{{ url_for('user_bp.register') }}" id="register-button">Register</a>
-  <a href="{{ url_for('user_bp.login') }}" id="login-button">Login</a>
-  {% else %}
-  <a href="{{ url_for('user_bp.profile') }}" id="profile-button">Profile</a>
-  {% endif %}
-  <h2>Scrutins</h2>
-  <ul>
-    {% for scrutin in scrutins %}
-    <li>
-      <h3>{{ scrutin.title }}</h3>
-      <p>{{ scrutin.description }}</p>
-      <p>Start Date: {{ scrutin.start_date }}</p>
-      <p>End Date: {{ scrutin.end_date }}</p>
-      <a href="{{ url_for('scrutins.scrutin_details', scrutin_id=scrutin._id) }}">Details</a>
-    </li>
-    {% endfor %}
-  </ul>
+  <div class="container">
+    <h1>Welcome to the Home Page</h1>
+    <p>home.</p>
+    {% if not session.logged_in %}
+      <a href="{{ url_for('user_bp.register') }}" id="register-button">Register</a>
+      <a href="{{ url_for('user_bp.login') }}" id="login-button">Login</a>
+    {% else %}
+      <a href="{{ url_for('user_bp.profile') }}" id="profile-button">Profile</a>
+    {% endif %}
+    <h2>Scrutins</h2>
+    <ul>
+      {% for scrutin in scrutins %}
+      <li>
+        <h3>{{ scrutin.title }}</h3>
+        <p>{{ scrutin.description }}</p>
+        <p>Start Date: {{ scrutin.start_date }}</p>
+        <p>End Date: {{ scrutin.end_date }}</p>
+        <a href="{{ url_for('scrutins.scrutin_details', scrutin_id=scrutin._id) }}" class="details-button">Details</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <a href="{{ url_for('scrutins.get_all_scrutins') }}">
+      <button>Voir tous les scrutins</button>
+    </a>
+  </div>
 </body>
 </html>

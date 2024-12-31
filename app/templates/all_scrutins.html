@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Scrutins</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/all_scrutins.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1> Scrutins</h1>
+    <div class="scrutins-container">
+      {% for scrutin in scrutins %}
+      <div class="scrutin-card">
+        <h3>{{ scrutin.title }}</h3>
+        <p>{{ scrutin.description }}</p>
+        <p>Date de début : {{ scrutin.start_date }}</p>
+        <p>Date de fin : {{ scrutin.end_date }}</p>
+        <a href="{{ url_for('scrutins.scrutin_details', scrutin_id=scrutin._id) }}" class="details-button">Details</a>
+      </div>
+      {% endfor %}
+      <a href="{{ url_for('home') }}">
+        <button>Retour à l'accueil</button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

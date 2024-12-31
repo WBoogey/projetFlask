@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/create_scrutin.css') }}">
 </head>
 <body>
-  <h1>Create Scrutin</h1>
+  <h1>Créer un scrutin</h1>
   <form method="POST" action="{{ url_for('user_bp.create_scrutin') }}">
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>
@@ -16,7 +16,7 @@
     <label for="description">Description:</label>
     <textarea id="description" name="description" required></textarea>
     <br>
-    <label for="options">Options (comma separated):</label>
+    <label for="options">Options (ex: "1";"2"):</label>
     <input type="text" id="options" name="options" required>
     <br>
     <label for="start_date">Start Date:</label>

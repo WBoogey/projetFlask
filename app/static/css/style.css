@@ -39,6 +39,20 @@ button:hover {
   background-color: #333333; /* Gris foncé */
 }
 
+.details-button {
+  display: inline-block;
+  background-color: #000000; /* Noir */
+  color: #ffffff; /* Blanc */
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.details-button:hover {
+  background-color: #333333; /* Gris foncé */
+}
+
 form {
   background-color: #f0f0f0; /* Gris clair */
   padding: 20px;

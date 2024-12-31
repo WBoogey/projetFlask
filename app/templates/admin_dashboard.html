@@ -8,6 +8,9 @@
 </head>
 <body>
   <h1>Tableau de bord administrateur</h1>
+  <a href="{{ url_for('home') }}">
+    <button>Retour à l'accueil</button>
+  </a>
   <h2>Scrutins</h2>
   <a href="{{ url_for('user_bp.create_scrutin') }}">
     <button>Créer un nouveau scrutin</button>

@@ -6,9 +6,6 @@ from ..helper.convertion import ensure_datetime
 class Scrutin:
     @staticmethod
     def create_scrutin(title, description, options, start_date, end_date, created_by):
-        if len(options) < 2:
-            raise ValueError("A scrutin must have at least two options.")
-
         start_date = Scrutin.ensure_datetime(start_date)
         end_date = Scrutin.ensure_datetime(end_date)
 
