@@ -33,7 +33,7 @@ class Scrutin:
         for scrutin in scrutins:
             scrutin["_id"] = str(scrutin["_id"])  # Serialize ObjectId
         return scrutins
-    
+
     @staticmethod
     def get_scrutin_by_id(scrutin_id):
         scrutin = mongo.db.scrutins.find_one({"_id": ObjectId(scrutin_id)})
@@ -97,3 +97,14 @@ class Scrutin:
             "total_votes": total_votes,
             "avg_options_per_scrutin": avg_options
         }
+    @staticmethod
+    def ensure_datetime(value):
+        """
+        Ensure the value is a datetime object.
+        """
+        if isinstance(value, datetime):
+            return value
+        elif isinstance(value, str):
+            return datetime.strptime(value, "%Y-%m-%d")
+        else:
+            raise ValueError("Invalid datetime value.")
