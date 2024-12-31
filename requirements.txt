@@ -5,3 +5,4 @@ PyJWT
 bcrypt
 pytest
 Flask-CORS
+mongomock
